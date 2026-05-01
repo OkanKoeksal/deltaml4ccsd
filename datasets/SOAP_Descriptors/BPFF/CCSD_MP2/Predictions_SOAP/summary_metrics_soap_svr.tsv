@@ -1,0 +1,2 @@
+model	mae_delta	mae_ccsd	weighted_mae_ccsd	tail_mae_ccsd	n_tail
+SOAP-SVR	3.68550825801191e-05	3.68550825805869e-05	2.0819709993702412e-05	3.0026293416085537e-06	5

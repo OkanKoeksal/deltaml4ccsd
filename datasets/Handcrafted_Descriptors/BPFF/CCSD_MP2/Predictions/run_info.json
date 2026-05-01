@@ -1,0 +1,18 @@
+{
+  "low_level_label": "MP2",
+  "features_file": "processed_features.txt",
+  "xyz_list_file": "processed_xyz_files.txt",
+  "low_level_energies_file": "MP2.txt",
+  "ccsd_energies_file": "CCSD.txt",
+  "n_total": 5497,
+  "n_ccsd": 900,
+  "n_train": 800,
+  "random_state": 9,
+  "add_low_level_as_feature": true,
+  "tail_weighted_ccsd_loss": true,
+  "tail_q_ccsd": 0.1,
+  "tail_factor_ccsd": 10.0,
+  "gbr_model_file": "final_gbr_delta_ccsd_mp2.pkl",
+  "svr_model_file": "final_svr_delta_ccsd_mp2.pkl",
+  "gpr_model_file": "final_gpr_delta_ccsd_mp2.pkl"
+}

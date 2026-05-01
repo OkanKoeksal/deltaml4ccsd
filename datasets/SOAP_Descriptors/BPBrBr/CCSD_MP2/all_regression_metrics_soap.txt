@@ -1,0 +1,2 @@
+File_Name	Model	Descriptor	R2	MSE	MAE_measured	StdErr	MAE_window_used	Most_negative	Lower_window	Upper_window	Hits
+predicted_ccsd_from_mp2_soap_svr	SOAP_SVR	SOAP	0.723950	3.0307006641e-07	2.5006350877e-04	5.4239953319e-04	2.5006350877e-04	-15801.7174861061	-15801.7177361696	-15801.7172360426	215

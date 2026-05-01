@@ -1,0 +1,32 @@
+{
+  "system_label": "BPFF",
+  "descriptor_label": "SOAP",
+  "low_level_label": "MP2",
+  "xyz_list_file": "processed_xyz_files.txt",
+  "low_level_energies_file": "MP2.txt",
+  "ccsd_energies_file": "CCSD.txt",
+  "soap_npy_file": "soap_features.npy",
+  "n_total": 5497,
+  "n_known": 900,
+  "n_train": 800,
+  "random_state": 36,
+  "add_low_level_as_feature": true,
+  "use_pca": true,
+  "pca_n_components": 10,
+  "soap_species": [
+    "B",
+    "P",
+    "F"
+  ],
+  "soap_r_cut": 5.5,
+  "soap_n_max": 8,
+  "soap_l_max": 6,
+  "soap_sigma": 0.4,
+  "soap_average": "inner",
+  "tail_weighted_ccsd_loss": true,
+  "tail_q_ccsd": 0.1,
+  "tail_factor_ccsd": 10.0,
+  "svr_model_file": "pretrained_svr_soap_delta_ccsd_mp2.pkl",
+  "scaler_file": "soap_scaler.pkl",
+  "pca_file": "soap_pca.pkl"
+}

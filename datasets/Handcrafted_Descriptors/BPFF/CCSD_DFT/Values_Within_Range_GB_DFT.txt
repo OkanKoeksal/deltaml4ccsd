@@ -1,0 +1,12 @@
+dataset_row	predicted_ccsd	xyz_path
+1361	-964.4325521975	Structures_reordered/structure1361.xyz
+1438	-964.4325601932	Structures_reordered/structure1438.xyz
+2069	-964.4327166850	Structures_reordered/structure2069.xyz
+2583	-964.4325691548	Structures_reordered/structure2583.xyz
+2618	-964.4326336408	Structures_reordered/structure2618.xyz
+3141	-964.4327304141	Structures_reordered/structure3141.xyz
+3314	-964.4325676327	Structures_reordered/structure3314.xyz
+3401	-964.4325865590	Structures_reordered/structure3401.xyz
+4858	-964.4325527289	Structures_reordered/structure4858.xyz
+5026	-964.4325970059	Structures_reordered/structure5026.xyz
+5431	-964.4325584735	Structures_reordered/structure5431.xyz
