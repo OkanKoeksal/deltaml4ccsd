@@ -1,0 +1,15 @@
+{
+  "low_level_label": "DFT",
+  "features_file": "processed_features_final_reordered.txt",
+  "xyz_list_file": "processed_xyz_files_reordered.txt",
+  "low_level_energies_file": "DFT_ML_Final_reordered.txt",
+  "ccsd_energies_file": "CCSD_ML_Final_reordered.txt",
+  "n_total": 5556,
+  "n_ccsd": 972,
+  "n_train": 800,
+  "random_state": 92,
+  "add_low_level_as_feature": true,
+  "tail_weighted_ccsd_loss": true,
+  "tail_q_ccsd": 0.1,
+  "tail_factor_ccsd": 10.0
+}
