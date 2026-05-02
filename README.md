@@ -476,8 +476,8 @@ The known CCSD block is kept separate from the remaining screening structures. C
 For handcrafted descriptor models:
 
 ```bash
-python3 3_train_handcrafted_delta_ml_models.py
-python3 4_select_candidate_structures.py
+python3 1_train_handcrafted_delta_ml_models.py
+python3 2_select_candidate_structures.py
 ```
 
 For SOAP descriptor models:
