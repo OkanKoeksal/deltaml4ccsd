@@ -384,6 +384,12 @@ For older local environments, the scripts were also tested in Cygwin/Python work
 - Candidate structures are copied based on the row order in `processed_xyz_files.dat`.
 - The selected candidates depend on the model prediction file and the MAE window computed from the held-out CCSD block.
 
+### Optuna and pretrained-model reproducibility
+
+The pretrained `.pkl` files included in this repository are the reference models used to generate the prediction files and candidate selections. When these files are present, the scripts load them automatically and reproduce the corresponding model predictions.
+
+If the pretrained `.pkl` files are removed, the scripts retrain the models. In workflows using Optuna, this retraining step may involve a new hyperparameter optimization. The dataset-level `RANDOM_STATE` fixes the train/test split and the random state of the scikit-learn estimators, but it does not by itself fix Optuna's internal hyperparameter sampling. Consequently, a fresh Optuna run may select different hyperparameters and produce different retrained models. For exact reproduction of the published prediction files, use the provided pretrained `.pkl` models. 
+
 ---
 
 
