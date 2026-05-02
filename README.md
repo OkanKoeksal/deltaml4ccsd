@@ -45,15 +45,15 @@ The dataset-local scripts remain fully executable. In addition, the repository n
 
 The repository contains datasets for the following homohalogenated borane-phosphine donor-acceptor adducts:
 
-- `BPFF` denotes F<sub>3</sub>B-PF<sub>3</sub>.
-- `BPClCl` denotes Cl<sub>3</sub>B-PCl<sub>3</sub>.
-- `BPBrBr` denotes Br<sub>3</sub>B-PBr<sub>3</sub>.
+- `BPFF`: F<sub>3</sub>B-PF<sub>3</sub>
+- `BPClCl`: Cl<sub>3</sub>B-PCl<sub>3</sub>
+- `BPBrBr`: Br<sub>3</sub>B-PBr<sub>3</sub>
 
 In the directory names, the shorthand labels are used as follows:
 
-- `BPFF` denotes F<sub>3</sub>B-PF<sub>3</sub>.
-- `BPClCl` denotes Cl<sub>3</sub>B-PCl<sub>3</sub>.
-- `BPBrBr` denotes Br<sub>3</sub>B-PBr<sub>3</sub>.
+- `BPFF` denotes F<sub>3</sub>B-PF<sub>3</sub>
+- `BPClCl` denotes Cl<sub>3</sub>B-PCl<sub>3</sub>
+- `BPBrBr` denotes Br<sub>3</sub>B-PBr<sub>3</sub>
 
 The available correction tasks are organized as:
 
