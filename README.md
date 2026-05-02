@@ -402,7 +402,3 @@ If you use this repository, the trained models, or the accompanying datasets, pl
 ```
 
 ---
-
-## License
-
-Please see the `LICENSE` file for licensing information.
