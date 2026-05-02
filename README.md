@@ -1,155 +1,121 @@
-# DeltaML4CCSD
+# deltaml4ccsd
 
-Machine-learning-based correction of lower-level quantum-chemical energies toward CCSD-quality energies for donor-acceptor complexes.
+Machine-learning correction of low-level electronic-structure energies toward CCSD quality for homohalogenated borane--phosphine donor--acceptor adducts.
 
-This repository contains the datasets, molecular structures, descriptors, pretrained models, prediction outputs, and analysis scripts used for delta-machine-learning models of the form
+This repository accompanies the publication:
 
-```text
-Delta E = E_CCSD - E_low-level
-```
-
-where the lower-level method is either MP2 or DFT. The final predicted CCSD energy is reconstructed as
-
-```text
-E_CCSD(predicted) = E_low-level + Delta E(predicted)
-```
-
-Both handcrafted molecular descriptors and SOAP descriptors are provided.
+**Δ-Machine Learning toward CCSD Accuracy for Homohalogenated Borane--Phosphine Adducts: Screening Low-Energy Structures from DFT and MP2 Libraries**  
+O. Köksal, *Physical Chemistry Chemical Physics*, 2026, Accepted Manuscript.  
+DOI: [10.1039/D6CP00985A](https://doi.org/10.1039/D6CP00985A)
 
 ---
 
-## Contents
+## Overview
 
-The repository is organized by descriptor type, molecular system, and low-level reference method.
+This repository contains the datasets, molecular structures, pretrained models, and Python scripts used to reproduce the Δ-machine-learning workflow described in the publication.
+
+The central idea is to correct low-level electronic-structure energies toward CCSD quality. The machine-learning model learns the energy difference
 
 ```text
-deltaml4ccsd/
-├── datasets/
-│   ├── Handcrafted_Descriptors/
-│   │   ├── BPBrBr/
-│   │   │   ├── CCSD_MP2/
-│   │   │   └── CCSD_DFT/
-│   │   ├── BPClCl/
-│   │   │   ├── CCSD_MP2/
-│   │   │   └── CCSD_DFT/
-│   │   └── BPFF/
-│   │       ├── CCSD_MP2/
-│   │       └── CCSD_DFT/
-│   │
-│   └── SOAP_Descriptors/
-│       ├── BPBrBr/
-│       │   ├── CCSD_MP2/
-│       │   └── CCSD_DFT/
-│       ├── BPClCl/
-│       │   ├── CCSD_MP2/
-│       │   └── CCSD_DFT/
-│       └── BPFF/
-│           ├── CCSD_MP2/
-│           └── CCSD_DFT/
-│
-├── src/
-└── README.md
+ΔE = E_CCSD - E_low-level
 ```
 
-The three molecular systems are:
+where `E_low-level` is either a DFT or MP2 energy. The final predicted CCSD-quality energy is then reconstructed as
 
 ```text
-BPBrBr
-BPClCl
+E_CCSD,predicted = E_low-level + ΔE_predicted
+```
+
+The repository contains two descriptor/model families:
+
+1. **Handcrafted-descriptor Δ-ML models**
+
+   These models use precomputed descriptor vectors based on molecular geometry information. Depending on the dataset, the models correct either DFT or MP2 energies toward CCSD quality.
+
+2. **SOAP-descriptor Δ-ML models**
+
+   These models use Smooth Overlap of Atomic Positions (SOAP) descriptors generated from the `.xyz` structures. The SOAP workflow uses support vector regression together with train-only scaling and optional PCA dimensionality reduction.
+
+For both descriptor families, the workflow consists of two steps:
+
+1. **Model training or loading**
+2. **Candidate low-energy structure selection**
+
+The scripts are intentionally stored inside each dataset directory so that each case can be reproduced directly from that directory without changing global paths.
+
+---
+
+## Systems
+
+The repository contains datasets for the following homohalogenated borane--phosphine adducts:
+
+```text
 BPFF
+BPClCl
+BPBrBr
 ```
 
-Each system is available for two energy-pair settings:
+The available correction tasks are organized as:
 
 ```text
-CCSD_MP2    # Delta-learning from MP2 to CCSD
-CCSD_DFT    # Delta-learning from DFT to CCSD
+CCSD_DFT    DFT -> CCSD correction
+CCSD_MP2    MP2 -> CCSD correction
 ```
 
 ---
 
-## Dataset format
+## Repository layout
 
-Each dataset directory is self-contained. The important files are:
-
-```text
-Structures/
-processed_xyz_files.txt
-processed_features.txt
-MP2.txt or DFT.txt
-CCSD.txt
-```
-
-The rows of these files are aligned. Row `i` in `processed_xyz_files.txt`, `processed_features.txt`, and the lower-level energy file corresponds to the same molecular structure.
-
-For handcrafted descriptor models:
+The main data are stored under `datasets/`.
 
 ```text
-processed_features.txt
+datasets/
+├── Handcrafted_Descriptors/
+│   ├── BPFF/
+│   │   ├── CCSD_DFT/
+│   │   └── CCSD_MP2/
+│   ├── BPClCl/
+│   │   ├── CCSD_DFT/
+│   │   └── CCSD_MP2/
+│   └── BPBrBr/
+│       ├── CCSD_DFT/
+│       └── CCSD_MP2/
+│
+└── SOAP_Descriptors/
+    ├── BPFF/
+    │   └── CCSD_MP2/
+    ├── BPClCl/
+    │   └── CCSD_MP2/
+    └── BPBrBr/
+        └── CCSD_MP2/
 ```
 
-contains the handcrafted descriptor matrix.
-
-For SOAP models:
-
-```text
-soap_features.npy
-```
-
-contains the cached SOAP descriptor matrix generated from the structures listed in
-
-```text
-processed_xyz_files.txt
-```
-
-The lower-level energy file is either
-
-```text
-MP2.txt
-```
-
-or
-
-```text
-DFT.txt
-```
-
-depending on the directory. The CCSD reference values are stored in
-
-```text
-CCSD.txt
-```
-
-The order of these files must not be changed independently.
+The `src/` directory is reserved for possible future command-line wrappers or shared helper routines. The current reproducible workflow uses the self-contained scripts inside each dataset directory.
 
 ---
 
-## Handcrafted descriptor workflows
+## Dataset directory contents
 
-Handcrafted descriptor datasets are located in:
+### Handcrafted-descriptor directories
 
-```text
-datasets/Handcrafted_Descriptors/
-```
-
-A typical handcrafted descriptor directory contains:
+A typical handcrafted-descriptor directory contains files such as:
 
 ```text
-Structures/
+CCSD.txt
+DFT.txt or MP2.txt
 processed_features.txt
 processed_xyz_files.txt
-MP2.txt or DFT.txt
-CCSD.txt
-
-1_Reorder_dataset_keep_known_fixed.py
-2_standardize_structure_names.py
-3_train_handcrafted_delta_ml_models.py
-4_select_candidate_structures.py
-
+Structures/
 pretrained_gbr_delta_ccsd_*.pkl
 pretrained_svr_delta_ccsd_*.pkl
 pretrained_gpr_delta_ccsd_*.pkl
+1_train_handcrafted_delta_ml_models.py
+2_select_candidate_structures.py
+```
 
+Typical output directories/files after running the scripts are:
+
+```text
 Predictions/
 Plots_HeldOut_Set/
 Found_Within_MAE_Range/
@@ -157,340 +123,246 @@ all_regression_metrics.txt
 Values_Within_Range_*.txt
 ```
 
-The main training and prediction script is:
+### SOAP-descriptor directories
+
+A typical SOAP-descriptor directory contains files such as:
 
 ```text
-3_train_handcrafted_delta_ml_models.py
+CCSD.txt
+MP2.txt
+processed_xyz_files.txt
+Structures/
+soap_features.npy
+soap_scaler.pkl
+soap_pca.pkl
+pretrained_svr_soap_delta_ccsd_mp2.pkl
+1_train_soap_delta_ml_models.py
+2_select_candidate_structures.py
 ```
 
-It loads or trains the following models:
+Typical output directories/files after running the scripts are:
 
 ```text
-GradientBoostingRegressor
+Predictions_SOAP/
+Plots_HeldOut_Set_SOAP/
+Found_Within_MAE_Range_SOAP/
+all_regression_metrics_soap.txt
+Values_Within_Range_SOAP_SVR_SOAP_MP2.txt
+```
+
+---
+
+## Important file conventions
+
+All relevant files inside a dataset directory are row-aligned. This means that row `i` in the following files refers to the same molecular structure:
+
+```text
+processed_features.txt
+processed_xyz_files.txt
+DFT.txt or MP2.txt
+CCSD.txt, where available
+```
+
+The file `processed_xyz_files.txt` defines the authoritative structure order. The structures have been standardized to a uniform naming convention:
+
+```text
+structure0.xyz
+structure1.xyz
+structure2.xyz
+...
+```
+
+For each dataset, the first part of the file contains structures with known CCSD reference energies. These rows are used for model training and held-out testing. The remaining rows are treated as the low-level structure library for which CCSD-quality energies are predicted.
+
+The prediction files are written such that prediction line 1 corresponds to dataset row `N_TRAIN`.
+
+```text
+prediction line 1 -> dataset row N_TRAIN
+prediction line 2 -> dataset row N_TRAIN + 1
+```
+
+The value of `N_TRAIN` is defined at the top of each training and candidate-selection script.
+
+---
+
+## Workflow
+
+### 1. Train or load the Δ-ML model
+
+Enter a dataset directory and run the training script.
+
+For handcrafted descriptors:
+
+```bash
+python 1_train_handcrafted_delta_ml_models.py
+```
+
+For SOAP descriptors:
+
+```bash
+python 1_train_soap_delta_ml_models.py
+```
+
+The training script performs the following operations:
+
+1. Loads the descriptor matrix or SOAP descriptor cache.
+2. Loads the ordered low-level and CCSD energy files.
+3. Splits the known CCSD block into training and held-out test data.
+4. Loads pretrained `.pkl` models if present.
+5. Retrains models only if the pretrained model files are absent.
+6. Predicts CCSD-quality energies for rows `N_TRAIN:N_TOTAL`.
+7. Writes prediction files and summary metrics.
+
+For handcrafted descriptors, the models are:
+
+```text
+Gradient Boosting Regressor
 Support Vector Regressor
 Gaussian Process Regressor
 ```
 
-If pretrained `.pkl` files are present, they are loaded directly. If they are absent, the script trains new models and saves them.
-
-The candidate-selection script is:
+For SOAP descriptors, the current cleaned workflow uses:
 
 ```text
-4_select_candidate_structures.py
+SOAP + SVR
 ```
 
-It compares the predictions against the held-out CCSD reference block, generates regression and error-distribution plots, identifies structures within the MAE window around the most negative predicted CCSD energy, and copies the corresponding `.xyz` files into:
+### 2. Select candidate low-energy structures
+
+After the training/prediction step, run:
+
+```bash
+python 2_select_candidate_structures.py
+```
+
+The candidate-selection script performs the following operations:
+
+1. Reads the prediction file.
+2. Compares the first held-out prediction block against the corresponding CCSD reference block.
+3. Computes regression/error metrics.
+4. Uses the measured MAE as an energy window around the most negative predicted CCSD energy.
+5. Finds structures whose predicted CCSD energies fall within that window.
+6. Writes the selected values to a text file.
+7. Copies the corresponding `.xyz` structures into an output directory.
+
+The main outputs are:
 
 ```text
-Found_Within_MAE_Range/
+all_regression_metrics*.txt
+Values_Within_Range*.txt
+Plots_HeldOut_Set*/
+Found_Within_MAE_Range*/
 ```
 
-### Running a handcrafted descriptor workflow
+---
 
-Run the scripts from inside the corresponding dataset directory. For example:
+## Example: handcrafted descriptors
+
+To reproduce a handcrafted-descriptor MP2-to-CCSD workflow, enter the corresponding directory and run:
 
 ```bash
 cd datasets/Handcrafted_Descriptors/BPBrBr/CCSD_MP2
 
-python3 3_train_handcrafted_delta_ml_models.py
-python3 4_select_candidate_structures.py
+python 1_train_handcrafted_delta_ml_models.py
+python 2_select_candidate_structures.py
 ```
 
-The same procedure applies to the other systems and to the DFT-based workflows.
+For a DFT-to-CCSD workflow:
+
+```bash
+cd datasets/Handcrafted_Descriptors/BPFF/CCSD_DFT
+
+python 1_train_handcrafted_delta_ml_models.py
+python 2_select_candidate_structures.py
+```
 
 ---
 
-## SOAP descriptor workflows
+## Example: SOAP descriptors
 
-SOAP descriptor datasets are located in:
-
-```text
-datasets/SOAP_Descriptors/
-```
-
-A typical SOAP descriptor directory contains:
-
-```text
-Structures/
-processed_xyz_files.txt
-MP2.txt or DFT.txt
-CCSD.txt
-
-1_train_soap_delta_ml_models.py
-2_select_candidate_structures.py
-
-soap_features.npy
-soap_scaler.pkl
-soap_pca.pkl
-pretrained_svr_soap_delta_ccsd_*.pkl
-
-Predictions_SOAP/
-Plots_HeldOut_Set_SOAP/
-Found_Within_MAE_Range_SOAP/
-all_regression_metrics_soap.txt
-Values_Within_Range_*_SOAP_*.txt
-```
-
-The main SOAP training and prediction script is:
-
-```text
-1_train_soap_delta_ml_models.py
-```
-
-It performs the following steps:
-
-1. Reads the `.xyz` structures listed in `processed_xyz_files.txt`.
-2. Builds or loads SOAP descriptors from `soap_features.npy`.
-3. Optionally appends the lower-level energy as an additional scalar feature.
-4. Applies train-only feature scaling.
-5. Applies train-only PCA if enabled.
-6. Loads or trains a SOAP-SVR delta-learning model.
-7. Writes predicted CCSD energies for the screening block.
-
-The SOAP candidate-selection script is:
-
-```text
-2_select_candidate_structures.py
-```
-
-It evaluates the SOAP-SVR predictions on the held-out CCSD block and copies selected structures into:
-
-```text
-Found_Within_MAE_Range_SOAP/
-```
-
-### Running a SOAP workflow
-
-Run the scripts from inside the corresponding dataset directory. For example:
+To reproduce a SOAP-based MP2-to-CCSD workflow:
 
 ```bash
 cd datasets/SOAP_Descriptors/BPFF/CCSD_MP2
 
-python3 1_train_soap_delta_ml_models.py
-python3 2_select_candidate_structures.py
+python 1_train_soap_delta_ml_models.py
+python 2_select_candidate_structures.py
 ```
+
+The SOAP script will use `soap_features.npy` if it is already present. If the SOAP feature file is removed, the descriptors are regenerated from the `.xyz` structures listed in `processed_xyz_files.txt`.
 
 ---
 
-## Prediction files
+## Dependencies
 
-For handcrafted descriptor workflows, prediction files are written to:
-
-```text
-Predictions/
-```
-
-Typical MP2-based prediction files are:
-
-```text
-predicted_ccsd_from_mp2_gbr.txt
-predicted_ccsd_from_mp2_svr.txt
-predicted_ccsd_from_mp2_gpr.txt
-```
-
-Typical DFT-based prediction files are:
-
-```text
-predicted_ccsd_from_dft_gbr.txt
-predicted_ccsd_from_dft_svr.txt
-predicted_ccsd_from_dft_gpr.txt
-```
-
-For SOAP workflows, prediction files are written to:
-
-```text
-Predictions_SOAP/
-```
-
-Typical SOAP prediction files are:
-
-```text
-predicted_ccsd_from_mp2_soap_svr.txt
-predicted_ccsd_from_dft_soap_svr.txt
-```
-
----
-
-## Candidate selection
-
-The candidate-selection scripts compare the first part of the prediction file against the available held-out CCSD reference energies.
-
-The following quantities are reported:
-
-```text
-R2
-MSE
-MAE
-standard error
-maximum absolute error
-```
-
-The scripts then locate structures whose predicted CCSD energies fall inside an MAE-sized window around the most negative predicted CCSD energy.
-
-Selected structures are copied into:
-
-```text
-Found_Within_MAE_Range/
-```
-
-for handcrafted descriptors, or
-
-```text
-Found_Within_MAE_Range_SOAP/
-```
-
-for SOAP descriptors.
-
-The corresponding tabulated results are written as:
-
-```text
-Values_Within_Range_*.txt
-```
-
-Regression metrics are written as:
-
-```text
-all_regression_metrics.txt
-all_regression_metrics_soap.txt
-```
-
-Plots are written to:
-
-```text
-Plots_HeldOut_Set/
-Plots_HeldOut_Set_SOAP/
-```
-
-or similarly named plot directories inside each dataset folder.
-
----
-
-## Row-index convention
-
-The training scripts generate predictions for dataset rows
-
-```text
-N_TRAIN : N_TOTAL
-```
-
-Therefore, prediction line 1 corresponds to dataset row `N_TRAIN`.
-
-For example, if
-
-```text
-N_TRAIN = 800
-```
-
-then
-
-```text
-prediction line 1   -> dataset row 800
-prediction line 2   -> dataset row 801
-prediction line 100 -> dataset row 899
-```
-
-If
-
-```text
-N_TRAIN = 1027
-```
-
-then
-
-```text
-prediction line 1   -> dataset row 1027
-prediction line 2   -> dataset row 1028
-prediction line 100 -> dataset row 1126
-```
-
-This convention is used by the candidate-selection scripts to map predicted energies back to the corresponding `.xyz` structures.
-
----
-
-## Pretrained models
-
-If pretrained models are present, they are loaded directly.
-
-Typical handcrafted descriptor models are:
-
-```text
-pretrained_gbr_delta_ccsd_mp2.pkl
-pretrained_svr_delta_ccsd_mp2.pkl
-pretrained_gpr_delta_ccsd_mp2.pkl
-
-pretrained_gbr_delta_ccsd_dft.pkl
-pretrained_svr_delta_ccsd_dft.pkl
-pretrained_gpr_delta_ccsd_dft.pkl
-```
-
-Typical SOAP descriptor models are:
-
-```text
-pretrained_svr_soap_delta_ccsd_mp2.pkl
-pretrained_svr_soap_delta_ccsd_dft.pkl
-```
-
-If a pretrained model is missing, the corresponding training script trains a new model and writes the resulting `.pkl` file.
-
----
-
-## Requirements
-
-The scripts require Python 3 and the following main packages:
+The scripts require Python 3 and the following Python packages:
 
 ```text
 numpy
 pandas
-matplotlib
 scikit-learn
 joblib
 optuna
+matplotlib
 ase
 dscribe
 ```
 
-A minimal installation can be created with:
+The SOAP-based workflows require `dscribe`.
+
+A minimal installation can be performed with:
 
 ```bash
-pip install numpy pandas matplotlib scikit-learn joblib optuna ase dscribe
+pip install numpy pandas scikit-learn joblib optuna matplotlib ase dscribe
 ```
 
-For older Python environments, especially Python 3.6, compatible package versions may be required.
+For older local environments, the scripts were also tested in Cygwin/Python workflows. If using Cygwin, make sure that the correct Python environment and package installation paths are active before running the scripts.
 
 ---
 
 ## Reproducibility notes
 
-The dataset directories contain the files needed to reproduce the reported training and selection workflows.
-
-The scripts use fixed random states for the accepted train/test splits and model training runs. These values are set directly in the individual scripts.
-
-For the handcrafted descriptor workflows, scaling is fitted only on the training block. For SOAP workflows, both scaling and PCA are fitted only on the training block. This avoids information leakage from held-out or screening structures.
-
-The known CCSD block is kept separate from the remaining screening structures. Candidate selection is performed after prediction and follows the row-index convention described above.
+- The training scripts define `N_TOTAL`, `N_CCSD` or `N_KNOWN`, `N_TRAIN`, and `RANDOM_STATE` at the top of each file.
+- Pretrained model files are included where applicable and are loaded automatically.
+- If a pretrained model file is removed, the corresponding script will retrain the model using the parameters defined in the script.
+- SOAP descriptors are cached in `soap_features.npy` to avoid recomputation.
+- Candidate structures are copied based on the row order in `processed_xyz_files.txt`.
+- The selected candidates depend on the model prediction file and the MAE window computed from the held-out CCSD block.
 
 ---
 
-## Suggested usage
+## GitHub usage notes
 
-For handcrafted descriptor models:
-
-```bash
-python3 1_train_handcrafted_delta_ml_models.py
-python3 2_select_candidate_structures.py
-```
-
-For SOAP descriptor models:
+The repository is designed so that each dataset directory is self-contained. A typical local update workflow is:
 
 ```bash
-python3 1_train_soap_delta_ml_models.py
-python3 2_select_candidate_structures.py
+git status
+git add README.md datasets
+git commit -m "Update datasets, scripts, and README"
+git pull --rebase origin main
+git push origin main
 ```
 
-Run these commands from the dataset directory of the desired system and energy-pair setting.
+If Git reports that `README.md` is untracked and would be overwritten during `git pull --rebase`, either add and commit it first or move it temporarily before pulling.
 
 ---
 
 ## Citation
 
-If you use this repository, please cite the associated manuscript or publication describing the delta-machine-learning workflow for donor-acceptor complexes.
+If you use this repository, the trained models, or the accompanying datasets, please cite:
+
+```bibtex
+@article{Koeksal2026DeltaMLCCSD,
+  author  = {Koeksal, O.},
+  title   = {Delta-Machine Learning toward CCSD Accuracy for Homohalogenated Borane--Phosphine Adducts: Screening Low-Energy Structures from DFT and MP2 Libraries},
+  journal = {Physical Chemistry Chemical Physics},
+  year    = {2026},
+  doi     = {10.1039/D6CP00985A}
+}
+```
+
+---
+
+## License
+
+Please see the `LICENSE` file for licensing information.
