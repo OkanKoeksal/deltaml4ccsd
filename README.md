@@ -394,7 +394,7 @@ If you use this repository, the trained models, or the accompanying datasets, pl
 ```bibtex
 @article{Koeksal2026DeltaMLCCSD,
   author  = {Koeksal, O.},
-  title   = {Delta-Machine Learning toward CCSD Accuracy for Homohalogenated Borane--Phosphine Adducts: Screening Low-Energy Structures from DFT and MP2 Libraries},
+  title   = {Delta-Machine Learning toward CCSD Accuracy for Homohalogenated Borane-Phosphine Adducts: Screening Low-Energy Structures from DFT and MP2 Libraries},
   journal = {Physical Chemistry Chemical Physics},
   year    = {2026},
   doi     = {10.1039/D6CP00985A}
