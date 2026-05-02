@@ -14,8 +14,8 @@ from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error
 
 LOW_LEVEL_LABEL = "DFT"
 
-VALIDATION_FILE = "CCSD.txt"
-PROCESSED_XYZ_LIST = "processed_xyz_files.txt"
+VALIDATION_FILE = "CCSD.dat"
+PROCESSED_XYZ_LIST = "processed_xyz_files.dat"
 
 # Prediction line 1 corresponds to dataset row N_TRAIN.
 # For BPFF / DFT:
@@ -73,7 +73,7 @@ def safe_copy_structure(xyz_path, target_dir):
     """
     Copy xyz_path to target_dir.
 
-    The script first tries the path exactly as listed in processed_xyz_files.txt.
+    The script first tries the path exactly as listed in processed_xyz_files.dat.
     If that path does not exist, it tries Structures/<basename>.
     """
     xyz_path = xyz_path.strip()

@@ -22,10 +22,10 @@ from sklearn.gaussian_process.kernels import RBF, WhiteKernel
 
 LOW_LEVEL_LABEL = "DFT"
 
-FEATURES_FILE = "processed_features.txt"
-XYZ_LIST_FILE = "processed_xyz_files.txt"
-LOW_LEVEL_ENERGIES_FILE = "DFT.txt"
-CCSD_ENERGIES_FILE = "CCSD.txt"
+FEATURES_FILE = "processed_features.dat"
+XYZ_LIST_FILE = "processed_xyz_files.dat"
+LOW_LEVEL_ENERGIES_FILE = "DFT.dat"
+CCSD_ENERGIES_FILE = "CCSD.dat"
 
 N_TOTAL = 5713
 N_CCSD = 1127

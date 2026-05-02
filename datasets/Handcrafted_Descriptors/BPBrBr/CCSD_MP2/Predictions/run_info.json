@@ -1,9 +1,9 @@
 {
   "low_level_label": "MP2",
-  "features_file": "processed_features.txt",
-  "xyz_list_file": "processed_xyz_files.txt",
-  "low_level_energies_file": "MP2.txt",
-  "ccsd_energies_file": "CCSD.txt",
+  "features_file": "processed_features.dat",
+  "xyz_list_file": "processed_xyz_files.dat",
+  "low_level_energies_file": "MP2.dat",
+  "ccsd_energies_file": "CCSD.dat",
   "n_total": 5557,
   "n_ccsd": 972,
   "n_train": 800,

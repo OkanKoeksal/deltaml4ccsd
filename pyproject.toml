@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "deltaml4ccsd"
+version = "0.1.0"
+description = "Delta-machine-learning correction of DFT and MP2 energies toward CCSD quality."
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+    "numpy",
+    "pandas",
+    "scikit-learn",
+    "joblib",
+    "optuna",
+    "matplotlib",
+    "ase",
+    "dscribe",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
