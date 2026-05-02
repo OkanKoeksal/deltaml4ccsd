@@ -4,7 +4,7 @@ Machine-learning correction of low-level electronic-structure energies toward CC
 
 This repository accompanies the publication:
 
-**Δ-Machine Learning toward CCSD Accuracy for Homohalogenated Borane--Phosphine Adducts: Screening Low-Energy Structures from DFT and MP2 Libraries**  
+**Δ-Machine Learning toward CCSD Accuracy for Homohalogenated Borane-Phosphine Adducts: Screening Low-Energy Structures from DFT and MP2 Libraries**  
 O. Köksal, *Physical Chemistry Chemical Physics*, 2026, Accepted Manuscript.  
 DOI: [10.1039/D6CP00985A](https://doi.org/10.1039/D6CP00985A)
 
