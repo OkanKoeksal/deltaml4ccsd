@@ -1,6 +1,6 @@
 # deltaml4ccsd
 
-Machine-learning correction of low-level electronic-structure energies toward CCSD quality for homohalogenated borane--phosphine donor--acceptor adducts.
+Machine-learning correction of low-level electronic-structure energies toward CCSD quality for homohalogenated borane-phosphine donor-acceptor adducts.
 
 This repository accompanies the publication:
 
@@ -16,15 +16,11 @@ This repository contains the datasets, molecular structures, pretrained models, 
 
 The central idea is to correct low-level electronic-structure energies toward CCSD quality. The machine-learning model learns the energy difference
 
-```text
-ΔE = E_CCSD - E_low-level
-```
+ΔE = E<sub>CCSD</sub> − E<sub>low-level</sub>
 
-where `E_low-level` is either a DFT or MP2 energy. The final predicted CCSD-quality energy is then reconstructed as
+where E<sub>low-level</sub> is either a DFT or MP2 energy. The final predicted CCSD-quality energy is then reconstructed as
 
-```text
-E_CCSD,predicted = E_low-level + ΔE_predicted
-```
+E<sub>CCSD,predicted</sub> = E<sub>low-level</sub> + ΔE<sub>predicted</sub>
 
 The repository contains two descriptor/model families:
 
@@ -47,13 +43,19 @@ The scripts are intentionally stored inside each dataset directory so that each 
 
 ## Systems
 
-The repository contains datasets for the following homohalogenated borane--phosphine adducts:
+The repository contains datasets for the following homohalogenated borane-phosphine donor-acceptor adducts:
 
 ```text
-BPFF
-BPClCl
-BPBrBr
+BPFF      F3B-PF3
+BPClCl    Cl3B-PCl3
+BPBrBr    Br3B-PBr3
 ```
+
+In the directory names, the shorthand labels are used as follows:
+
+- `BPFF` denotes F<sub>3</sub>B-PF<sub>3</sub>.
+- `BPClCl` denotes Cl<sub>3</sub>B-PCl<sub>3</sub>.
+- `BPBrBr` denotes Br<sub>3</sub>B-PBr<sub>3</sub>.
 
 The available correction tasks are organized as:
 
@@ -181,7 +183,7 @@ prediction line 1 -> dataset row N_TRAIN
 prediction line 2 -> dataset row N_TRAIN + 1
 ```
 
-The value of `N_TRAIN` is defined at the top of each training and candidate-selection script.
+The values of `N_TOTAL`, `N_CCSD` or `N_KNOWN`, and `N_TRAIN` are defined at the top of each training and candidate-selection script.
 
 ---
 
@@ -328,22 +330,6 @@ For older local environments, the scripts were also tested in Cygwin/Python work
 - SOAP descriptors are cached in `soap_features.npy` to avoid recomputation.
 - Candidate structures are copied based on the row order in `processed_xyz_files.txt`.
 - The selected candidates depend on the model prediction file and the MAE window computed from the held-out CCSD block.
-
----
-
-## GitHub usage notes
-
-The repository is designed so that each dataset directory is self-contained. A typical local update workflow is:
-
-```bash
-git status
-git add README.md datasets
-git commit -m "Update datasets, scripts, and README"
-git pull --rebase origin main
-git push origin main
-```
-
-If Git reports that `README.md` is untracked and would be overwritten during `git pull --rebase`, either add and commit it first or move it temporarily before pulling.
 
 ---
 
