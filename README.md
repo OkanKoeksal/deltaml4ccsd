@@ -79,8 +79,6 @@ deltaml4ccsd/
 │       ├── train_handcrafted.py
 │       ├── train_soap.py
 │       ├── select_candidates.py
-│       ├── reorder_dataset.py
-│       ├── standardize_structures.py
 │       └── configs/
 │           ├── BPBrBr_CCSD_DFT_handcrafted.json
 │           ├── BPBrBr_CCSD_MP2_handcrafted.json
