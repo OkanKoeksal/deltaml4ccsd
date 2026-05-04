@@ -253,15 +253,15 @@ The repository also provides centralized wrappers under `src/deltaml4ccsd/`.
 From the repository root, use:
 
 ```bash
-PYTHONPATH=src python -m deltaml4ccsd.train_handcrafted --config src/deltaml4ccsd/configs/BPBrBr_CCSD_MP2_handcrafted.json
-PYTHONPATH=src python -m deltaml4ccsd.select_candidates --config src/deltaml4ccsd/configs/BPBrBr_CCSD_MP2_handcrafted.json
+PYTHONPATH=src python3 -m deltaml4ccsd.train_handcrafted --config src/deltaml4ccsd/configs/BPBrBr_CCSD_MP2_handcrafted.json
+PYTHONPATH=src python3 -m deltaml4ccsd.select_candidates --config src/deltaml4ccsd/configs/BPBrBr_CCSD_MP2_handcrafted.json
 ```
 
 For a SOAP workflow:
 
 ```bash
-PYTHONPATH=src python -m deltaml4ccsd.train_soap --config src/deltaml4ccsd/configs/BPFF_CCSD_MP2_soap.json
-PYTHONPATH=src python -m deltaml4ccsd.select_candidates --config src/deltaml4ccsd/configs/BPFF_CCSD_MP2_soap.json
+PYTHONPATH=src python3 -m deltaml4ccsd.train_soap --config src/deltaml4ccsd/configs/BPFF_CCSD_MP2_soap.json
+PYTHONPATH=src python3 -m deltaml4ccsd.select_candidates --config src/deltaml4ccsd/configs/BPFF_CCSD_MP2_soap.json
 ```
 
 The JSON configuration files specify the dataset directory, descriptor type, low-level method, row counts, model filenames, prediction filenames, and other workflow settings.
