@@ -218,8 +218,8 @@ Example for an MP2-to-CCSD workflow:
 ```bash
 cd datasets/Handcrafted_Descriptors/BPBrBr/CCSD_MP2
 
-python 1_train_handcrafted_delta_ml_models.py
-python 2_select_candidate_structures.py
+python3 1_train_handcrafted_delta_ml_models.py
+python3 2_select_candidate_structures.py
 ```
 
 Example for a DFT-to-CCSD workflow:
@@ -227,8 +227,8 @@ Example for a DFT-to-CCSD workflow:
 ```bash
 cd datasets/Handcrafted_Descriptors/BPFF/CCSD_DFT
 
-python 1_train_handcrafted_delta_ml_models.py
-python 2_select_candidate_structures.py
+python3 1_train_handcrafted_delta_ml_models.py
+python3 2_select_candidate_structures.py
 ```
 
 ### SOAP descriptors
@@ -238,8 +238,8 @@ Example for a SOAP-based MP2-to-CCSD workflow:
 ```bash
 cd datasets/SOAP_Descriptors/BPFF/CCSD_MP2
 
-python 1_train_soap_delta_ml_models.py
-python 2_select_candidate_structures.py
+python3 1_train_soap_delta_ml_models.py
+python3 2_select_candidate_structures.py
 ```
 
 The SOAP script uses `soap_features.npy` if it is already present. If the SOAP feature file is removed, the descriptors are regenerated from the `.xyz` structures listed in `processed_xyz_files.dat`.
@@ -313,13 +313,13 @@ After the training/prediction step, run the candidate-selection script.
 Dataset-local form:
 
 ```bash
-python 2_select_candidate_structures.py
+python3 2_select_candidate_structures.py
 ```
 
 Central wrapper form:
 
 ```bash
-PYTHONPATH=src python -m deltaml4ccsd.select_candidates --config src/deltaml4ccsd/configs/BPBrBr_CCSD_MP2_handcrafted.json
+PYTHONPATH=src python3 -m deltaml4ccsd.select_candidates --config src/deltaml4ccsd/configs/BPBrBr_CCSD_MP2_handcrafted.json
 ```
 
 The candidate-selection script performs the following operations:
